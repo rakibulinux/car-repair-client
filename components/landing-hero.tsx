@@ -1,17 +1,15 @@
 "use client";
 
-import TypewriterComponent from "typewriter-effect";
-import Link from "next/link";
-import bg_car from "../assets/bg-auto-service.jpg";
 import { Button } from "@/components/ui/button";
 import { getUserInfo } from "@/services/auth.service";
+import { IUserInfoType } from "@/types";
+import Link from "next/link";
+import TypewriterComponent from "typewriter-effect";
 
 export const LandingHero = () => {
-  const user: any = getUserInfo();
-  console.log(user);
+  const user = getUserInfo() as IUserInfoType;
 
   const isSignedIn = user.role;
-  console.log(isSignedIn);
   return (
     <div className=" text-white font-bold py-36 text-center space-y-5">
       <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">

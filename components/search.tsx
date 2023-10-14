@@ -60,7 +60,7 @@ const Search = () => {
           />
         </svg>
       </Link> */}
-      <Link href="/" className="block shrink-0">
+      <Link href="/dashboard" className="block shrink-0">
         <span className="sr-only">Profile</span>
         <Image
           alt="Man"

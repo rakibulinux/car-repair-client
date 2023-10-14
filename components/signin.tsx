@@ -1,20 +1,16 @@
 "use client";
+import loginImage from "@/assets/login.svg";
+import { useUserLoginMutation } from "@/redux/api/authApi";
+import { loginSchema } from "@/schema/login";
+import { storeUserInfo } from "@/services/auth.service";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import Link from "next/link";
-import loginImage from "@/assets/login.svg";
-import {
-  useSuperAdminUserLoginMutation,
-  useUserLoginMutation,
-} from "@/redux/api/authApi";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { storeUserInfo } from "@/services/auth.service";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/schema/login";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "./ui/button";
+import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 
 type FormValues = {
   email: string;
@@ -38,7 +34,6 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log(res);
       if (res?.accessToken) {
         router.push("/");
       }

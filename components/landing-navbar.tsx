@@ -1,13 +1,12 @@
 "use client";
 
+import carRapair from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import carRapair from "@/assets/logo.png";
 
-import { Button } from "@/components/ui/button";
 import { getUserInfo } from "@/services/auth.service";
-import Search from "./search";
 import { useState } from "react";
+import Search from "./search";
 
 export const LandingNavbar = () => {
   const user: any = getUserInfo();
@@ -18,7 +17,7 @@ export const LandingNavbar = () => {
   };
   const isSignedIn = user.role;
   return (
-    <header className="p-4 bg-transparent">
+    <header className="px-4 bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo Part */}
