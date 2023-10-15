@@ -1,15 +1,12 @@
 "use client";
 
 import { User2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 import { Heading } from "@/components/heading";
 import Profile from "@/components/profile";
 import { cn } from "@/lib/utils";
 
 const ProfilePage = () => {
-  const router = useRouter();
-
   return (
     <div>
       <Heading

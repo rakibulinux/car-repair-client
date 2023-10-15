@@ -14,7 +14,10 @@ export type IGenericErrorResponse = {
   message: string;
   errorMessages: IGenericErrorMessage[];
 };
-
+export type SelectOptions = {
+  label: string;
+  value: string;
+};
 export type IGenericErrorMessage = {
   path: string | number;
   message: string;
@@ -27,4 +30,13 @@ export type IUserInfoType = {
   password: string;
   role: string;
   userId: string;
+};
+
+export type IAdmin = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: Date;
+  updatedAt: Date;
 };

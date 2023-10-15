@@ -1,7 +1,7 @@
 "use client";
 import { useUserRegisterMutation } from "@/redux/api/authApi";
-import { registerSchema } from "@/schema/login";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { getUserInfo } from "@/services/auth.service";
+import { IUserInfoType } from "@/types";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -13,30 +13,30 @@ import { Label } from "./ui/label";
 type FormValues = {
   name: string;
   email: string;
+  role?: string;
   password: string;
 };
 
-const AdminCreate = () => {
+type IProps = {
+  buttonTitle: string;
+  urlPath: string;
+};
+
+const CreateUser = ({ buttonTitle, urlPath }: IProps) => {
   const [userRegister] = useUserRegisterMutation();
   const router = useRouter();
-
-  const form = useForm<FormValues>({
-    resolver: yupResolver(registerSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-  });
+  const { role } = getUserInfo() as IUserInfoType;
+  const form = useForm<FormValues>({});
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log(data);
     try {
       const res = await userRegister({ ...data }).unwrap();
       console.log(res);
       if (res?.id) {
-        router.push("/super_admin/admin");
+        router.push(`${urlPath}`);
         toast.success("Admin Created Successfully");
       }
     } catch (error) {
@@ -46,12 +46,6 @@ const AdminCreate = () => {
   return (
     <section className="flex h-screen items-center justify-center">
       <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
-        <div className="text-gray-900 mx-auto max-w-lg text-center">
-          <h1 className="text-2xl font-bold sm:text-3xl">
-            Create an Admin Acount
-          </h1>
-        </div>
-
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -97,25 +91,32 @@ const AdminCreate = () => {
                 </FormItem>
               )}
             />
-            <Label className="my-2" title="role" htmlFor="role">
-              Role
-            </Label>
-            <FormField
-              name="role"
-              render={({ field }) => (
-                <FormItem className="col-span-12 lg:col-span-10">
-                  <FormControl className="m-0 p-0">
-                    <Input
-                      className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
-                      disabled={isLoading}
-                      placeholder="role"
-                      {...field}
-                      type="text"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            {role === "super_admin" && (
+              <>
+                <Label className="my-2" title="role" htmlFor="role">
+                  Role
+                </Label>
+                <FormField
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem className="col-span-12 lg:col-span-10">
+                      <FormControl className="m-0 p-0">
+                        <Input
+                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
+                          disabled={isLoading}
+                          placeholder="role"
+                          {...field}
+                          type="text"
+                          value="admin"
+                          defaultValue="admin"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
+
             <Label className="my-2" title="Password" htmlFor="password">
               Password
             </Label>
@@ -141,7 +142,7 @@ const AdminCreate = () => {
               disabled={isLoading}
               size="icon"
             >
-              Create Admin
+              {buttonTitle}
             </Button>
           </form>
         </Form>
@@ -150,4 +151,4 @@ const AdminCreate = () => {
   );
 };
 
-export default AdminCreate;
+export default CreateUser;

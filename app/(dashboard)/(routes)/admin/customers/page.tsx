@@ -7,7 +7,7 @@ import Loading from "@/app/loading";
 import { DataTable } from "@/components/data-table";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
-import { useGetAdminsQuery } from "@/redux/api/adminApi";
+import { useGetUsersQuery } from "@/redux/api/userApi";
 import { useDebounce } from "@/redux/hooks";
 import Link from "next/link";
 import { useState } from "react";
@@ -44,7 +44,7 @@ const AdminListPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAdminsQuery({ ...query });
+  const { data, isLoading } = useGetUsersQuery({ ...query });
   if (isLoading) {
     return <Loading />;
   }
@@ -59,18 +59,18 @@ const AdminListPage = () => {
       />
       <div className="flex flex-col md:flex-row justify-between items-center gap-3 px-4 lg:px-8 my-3">
         <div className="mr-10 md:mr-3">
-          <Link className="px-6 md:px-2" href="/super_admin/admin/create">
+          <Link className="px-6 md:px-2" href="/admin/customers/create">
             <Button
               className="col-span-12 lg:col-span-2 w-full"
               type="submit"
               size="icon"
             >
-              Create Admin
+              Create Customer
             </Button>
           </Link>
         </div>
       </div>
-      <DataTable columns={columns} data={(data && data.admins) || []} />
+      <DataTable columns={columns} data={(data && data.users) || []} />
     </div>
   );
 };

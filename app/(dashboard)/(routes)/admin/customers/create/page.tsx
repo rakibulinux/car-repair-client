@@ -5,10 +5,10 @@ export default function Page() {
     <>
       <div className="text-gray-900 mx-auto max-w-lg text-center my-10">
         <h1 className="text-2xl font-bold sm:text-3xl">
-          Create an Admin Account
+          Create a Customer Account
         </h1>
       </div>
-      <CreateUser buttonTitle="Create Admin" urlPath="/super_admin/admin" />;
+      <CreateUser buttonTitle="Create Customer" urlPath="/admin/customers" />;
     </>
   );
 }

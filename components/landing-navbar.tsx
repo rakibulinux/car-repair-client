@@ -5,17 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { getUserInfo } from "@/services/auth.service";
+import { IUserInfoType } from "@/types";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import Search from "./search";
 
+const navItems = [
+  { name: "HOME", url: "/" },
+  { name: "MENU", url: "/menu" },
+  { name: "CONTACT", url: "/contact" },
+];
+
 export const LandingNavbar = () => {
-  const user: any = getUserInfo();
+  const user = getUserInfo() as IUserInfoType;
+  const isSignedIn = user.role;
+
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
-  const isSignedIn = user.role;
+
   return (
     <header className="px-4 bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -35,59 +45,14 @@ export const LandingNavbar = () => {
           <div className="hidden md:block">
             <nav aria-label="Global">
               <ul className="flex items-center gap-6 text-sm">
-                <li>
-                  <Link
+                {navItems.map((item) => (
+                  <li
                     className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
+                    key={item.url}
                   >
-                    About
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Careers
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    History
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Services
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Projects
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Blog
-                  </Link>
-                </li>
+                    <Link href={item.url}>{item.name}</Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
@@ -100,59 +65,14 @@ export const LandingNavbar = () => {
           >
             <nav aria-label="Global">
               <ul className="flex items-center gap-6 text-sm flex-col">
-                <li>
-                  <Link
+                {navItems.map((item) => (
+                  <li
                     className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
+                    key={item.url}
                   >
-                    About
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Careers
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    History
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Services
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Projects
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    href="/"
-                  >
-                    Blog
-                  </Link>
-                </li>
+                    <Link href={item.url}>{item.name}</Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
@@ -185,20 +105,7 @@ export const LandingNavbar = () => {
                 onClick={toggleMobileMenu}
                 className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                <Menu />
               </button>
             </div>
           </div>

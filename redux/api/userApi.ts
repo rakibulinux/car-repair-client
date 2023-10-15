@@ -3,50 +3,50 @@ import { IMeta } from "@/types";
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
-const ADMIN_URL = "/users";
+const USER_URL = "/users";
 
-const adminApi = baseApi.injectEndpoints({
+const UserApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAdmins: build.query({
+    getUsers: build.query({
       query: (arg: Record<string, any>) => ({
-        url: `${ADMIN_URL}/admins`,
+        url: USER_URL,
         method: "GET",
         params: arg,
       }),
       transformResponse: (response: User[], meta: IMeta) => ({
-        admins: response,
+        users: response,
         meta,
       }),
-      providesTags: [tagTypes.admin],
+      providesTags: [tagTypes.user],
     }),
-    getSingleAdmin: build.query({
+    getSingleUser: build.query({
       query: (id: string) => ({
-        url: `${ADMIN_URL}/${id}`,
+        url: `${USER_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.admin],
+      providesTags: [tagTypes.user],
     }),
-    updateAdmin: build.mutation({
+    updateUser: build.mutation({
       query: ({ id, body }) => ({
-        url: `${ADMIN_URL}/${id}`,
+        url: `${USER_URL}/${id}`,
         method: "PATCH",
         data: body,
       }),
-      invalidatesTags: [tagTypes.admin],
+      invalidatesTags: [tagTypes.user],
     }),
-    deleteAdmin: build.mutation({
+    deleteUser: build.mutation({
       query: (id) => ({
-        url: `${ADMIN_URL}/${id}`,
+        url: `${USER_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.admin],
+      invalidatesTags: [tagTypes.user],
     }),
   }),
 });
 
 export const {
-  useGetAdminsQuery,
-  useGetSingleAdminQuery,
-  useUpdateAdminMutation,
-  useDeleteAdminMutation,
-} = adminApi;
+  useGetUsersQuery,
+  useGetSingleUserQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = UserApi;
