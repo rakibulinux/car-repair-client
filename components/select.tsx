@@ -9,7 +9,7 @@ type SelectFormProps = {
   label?: string;
   options: Option[];
   value: string;
-  defaultValue: string;
+  defaultValue?: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
@@ -30,7 +30,7 @@ const SelectForm = ({
         onChange={onChange}
         defaultValue={defaultValue}
       >
-        {options.map((option) => (
+        {options?.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

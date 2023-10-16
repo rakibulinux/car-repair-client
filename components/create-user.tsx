@@ -4,12 +4,11 @@ import { getUserInfo } from "@/services/auth.service";
 import { IUserInfoType } from "@/types";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
 type FormValues = {
   name: string;
   email: string;
@@ -27,20 +26,23 @@ const CreateUser = ({ buttonTitle, urlPath }: IProps) => {
   const router = useRouter();
   const { role } = getUserInfo() as IUserInfoType;
   const form = useForm<FormValues>({});
-
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data);
+    // if (role === "super_admin") {
+    //   return (data["role"] = "admin");
+    // }
+    role === "super_admin" && (data["role"] = "admin");
     try {
       const res = await userRegister({ ...data }).unwrap();
-      console.log(res);
       if (res?.id) {
         router.push(`${urlPath}`);
-        toast.success("Admin Created Successfully");
+        toast.success(
+          `${role === "super_admin" ? "Admin" : "User"} Created Successfully`
+        );
       }
-    } catch (error) {
-      console.log(`${error}`);
+    } catch (error: any) {
+      toast.error(`${error.message}`);
     }
   };
   return (

@@ -1,8 +1,10 @@
 import {
   Code,
   ImageIcon,
+  Layers2,
   LayoutDashboard,
   Music,
+  Repeat,
   Settings,
   ShieldPlus,
   User2,
@@ -55,16 +57,16 @@ export const adminRoutes = [
     href: "/admin/profile",
   },
   {
-    label: "Video Generation",
-    icon: VideoIcon,
+    label: "Services",
+    icon: Repeat,
     color: "text-orange-700",
-    href: "/admin/video",
+    href: "/admin/services",
   },
   {
-    label: "Music Generation",
-    icon: Music,
+    label: "Categories",
+    icon: Layers2,
     color: "text-emerald-500",
-    href: "/admin/music",
+    href: "/admin/categories",
   },
   {
     label: "Code Generation",
@@ -86,10 +88,10 @@ export const customerRoutes = [
     color: "text-sky-500",
   },
   {
-    label: "Conversation",
-    icon: User2,
-    href: "/customer",
-    color: "text-violet-500",
+    label: "Profile",
+    icon: ShieldPlus,
+    color: "text-pink-700",
+    href: "/customer/profile",
   },
   {
     label: "Image Generation",

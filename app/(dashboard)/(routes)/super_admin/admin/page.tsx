@@ -57,7 +57,7 @@ const AdminListPage = () => {
         iconColor="text-orange-700"
         bgColor="bg-orange-700/10"
       />
-      <div className="flex flex-col md:flex-row justify-between items-center gap-3 px-4 lg:px-8 my-3">
+      <div className="flex flex-col md:flex-row justify-end items-center gap-3 px-4 lg:px-8 my-3">
         <div className="mr-10 md:mr-3">
           <Link className="px-6 md:px-2" href="/super_admin/admin/create">
             <Button

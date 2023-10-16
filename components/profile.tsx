@@ -1,8 +1,10 @@
 import Loading from "@/app/loading";
+import myPic from "@/assets/my-bg2.png";
 import { useGetSingleUserQuery } from "@/redux/api/userApi";
 import { getUserInfo } from "@/services/auth.service";
 import { IUserInfoType } from "@/types";
 import { Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const Profile = () => {
@@ -12,13 +14,19 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
-  const { id, name, email, role, profile } = data;
+  const { id, name, email, profile } = data;
 
-  console.log(data);
   return (
     <div className="px-6 w-11/12 mx-auto">
       <div className="flex flex-wrap justify-end">
-        <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center"></div>
+        <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+          <Image
+            src={(profile && profile.profileImg) || myPic}
+            alt="My Profile Image"
+            width={100}
+            height={100}
+          />
+        </div>
         <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
           <div className="py-6 px-3 mt-32 sm:mt-0">
             <Link href={`/super_admin/profile/edit/${id}`}>

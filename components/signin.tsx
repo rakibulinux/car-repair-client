@@ -35,7 +35,7 @@ const SignIn = () => {
     try {
       const res = await userLogin({ ...data }).unwrap();
       if (res?.accessToken) {
-        router.push("/");
+        router.push("/dashboard");
       }
       storeUserInfo({ accessToken: res?.accessToken });
     } catch (error) {

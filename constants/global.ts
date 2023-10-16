@@ -46,6 +46,16 @@ export const bloodGroupOptions = [
     value: "O-",
   },
 ];
+export const availabilityOptions = [
+  {
+    label: "True",
+    value: "true",
+  },
+  {
+    label: "False",
+    value: "false",
+  },
+];
 
 export const months = [
   "January",
