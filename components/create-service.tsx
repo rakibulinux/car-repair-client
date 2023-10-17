@@ -9,18 +9,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import FormSelectField from "./FormSelectField";
 import Categories from "./categories";
+import { Editor } from "./editor";
 import { FileUpload } from "./file-upload";
 import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
 
 type FormValues = {
   name: string;
   description: string;
   price: number;
-  availability: boolean;
+  availability: "Available" | "Upcoming";
   image: string;
   categoryId: string;
 };
@@ -28,28 +28,23 @@ type FormValues = {
 const CreateService = () => {
   const [selectedCategory, setSelectedCategoryId] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string>("");
-  const [selectedAvailability, setSelectedAvailability] =
-    useState<string>("true");
-  console.log(selectedImage);
+  const [selectedAvailability, setSelectedAvailability] = useState<
+    "Available" | "Upcoming"
+  >("Available");
   const [addService] = useAddServiceMutation();
   const router = useRouter();
   const form = useForm<FormValues>({});
-
-  const isLoading = form.formState.isSubmitting;
+  const { isSubmitting, isValid } = form.formState;
   const onImageUpload = (data: any) => {
-    console.log(data);
     setSelectedImage(data.image);
   };
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
     const price = Number(data.price);
 
-    console.log(data);
     data["categoryId"] = selectedCategory;
     data["image"] = selectedImage;
     data["price"] = price;
-    data["availability"] =
-      (selectedAvailability === "false" && false) ||
-      (selectedAvailability === "true" && true);
+    data["availability"] = selectedAvailability;
     try {
       const res = await addService({ ...data }).unwrap();
       if (res?.id) {
@@ -69,8 +64,8 @@ const CreateService = () => {
               mx-auto mb-0 mt-8 space-y-4
               "
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
+          <div className="">
+            <div className="my-4">
               <Label className="my-2" title="name" htmlFor="name">
                 Service Name
               </Label>
@@ -81,7 +76,7 @@ const CreateService = () => {
                     <FormControl className="m-0 p-0">
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
-                        disabled={isLoading}
+                        disabled={!isValid || isSubmitting}
                         placeholder="name"
                         {...field}
                         type="text"
@@ -91,27 +86,8 @@ const CreateService = () => {
                 )}
               />
             </div>
-            <div>
-              <Label className="my-2" title="description" htmlFor="description">
-                Description
-              </Label>
-              <FormField
-                name="description"
-                render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0">
-                      <Textarea
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
-                        disabled={isLoading}
-                        placeholder="description"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
+
+            <div className="my-4">
               <Label className="my-2" title="Price" htmlFor="price">
                 Price
               </Label>
@@ -122,7 +98,7 @@ const CreateService = () => {
                     <FormControl className="m-0 p-0">
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
-                        disabled={isLoading}
+                        disabled={!isValid || isSubmitting}
                         placeholder="price"
                         {...field}
                         type="text"
@@ -132,7 +108,7 @@ const CreateService = () => {
                 )}
               />
             </div>
-            <div>
+            <div className="my-4">
               <FormSelectField
                 name="availability"
                 label="Availability"
@@ -140,8 +116,8 @@ const CreateService = () => {
                 handleChange={(el: any) => setSelectedAvailability(el)}
               />
             </div>
-            <div>
-              <Label className="my-2" title="image" htmlFor="image">
+            <div className="my-4">
+              <Label className="my-2 text-right" title="image" htmlFor="image">
                 Image
               </Label>
               {selectedImage ? (
@@ -149,7 +125,7 @@ const CreateService = () => {
                   src={selectedImage}
                   alt="service image"
                   height={300}
-                  width={300}
+                  width={900}
                 />
               ) : (
                 <FileUpload
@@ -161,26 +137,8 @@ const CreateService = () => {
                   }}
                 />
               )}
-
-              {/* <FormField
-                name="image"
-                render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0">
-                      <Input
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
-                        disabled={isLoading}
-                        placeholder="image"
-                        {...field}
-                        type="text"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              /> */}
             </div>
-
-            <div>
+            <div className="my-4">
               <Label className="my-2" title="categoryId" htmlFor="categoryId">
                 Category
               </Label>
@@ -190,11 +148,28 @@ const CreateService = () => {
                 setSelectedCategoryId={(el) => setSelectedCategoryId(el)}
               />
             </div>
+            <div className="my-4">
+              <Label className="my-2" title="description" htmlFor="description">
+                Description
+              </Label>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Editor {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
           <Button
             className=" col-span-12 lg:col-span-2 w-full"
             type="submit"
-            disabled={isLoading}
+            disabled={!isValid || isSubmitting}
             size="icon"
           >
             Create Service

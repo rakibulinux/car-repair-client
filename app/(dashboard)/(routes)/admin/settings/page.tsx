@@ -1,10 +1,16 @@
 import { Settings } from "lucide-react";
 
 import { Heading } from "@/components/heading";
+import { getUserInfo } from "@/services/auth.service";
+import { IUserInfoType } from "@/types";
+import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
   const isPro = true;
-
+  const { role } = getUserInfo() as IUserInfoType;
+  if (role !== "admin") {
+    redirect("/");
+  }
   return (
     <div>
       <Heading

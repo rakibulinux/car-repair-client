@@ -50,7 +50,7 @@ export type IService = {
   name: string;
   description: string | null;
   price: number;
-  availability: boolean;
+  availability: "Available" | "Upcoming";
   image: string;
   categoryId: string;
   createdAt: Date;

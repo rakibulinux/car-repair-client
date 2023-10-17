@@ -1,4 +1,4 @@
-import { ModeToggle } from "./DarkLight";
+import { ModeToggle } from "./dark-light";
 import { DropdownMenuItems } from "./dropdown-menu";
 
 const Search = () => {

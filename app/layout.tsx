@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { ModalProvider } from "@/components/modal-provider";
 import { ToasterProvider } from "@/components/toaster-provider";
 
 import { ThemeProvider } from "@/components/theme-provider";
@@ -26,7 +25,6 @@ export default async function RootLayout({
         <html lang="en" suppressHydrationWarning>
           <body className={font.className}>
             <ToasterProvider />
-            <ModalProvider />
             <ThemeProvider
               attribute="class"
               defaultTheme="system"

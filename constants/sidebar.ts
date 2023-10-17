@@ -1,4 +1,5 @@
 import {
+  BookmarkPlus,
   Code,
   ImageIcon,
   Layers2,
@@ -37,6 +38,7 @@ export const superAdminRoutes = [
     href: "/super_admin/settings",
   },
 ];
+
 export const adminRoutes = [
   {
     label: "Dashboard",
@@ -72,7 +74,13 @@ export const adminRoutes = [
     label: "Posts",
     icon: Code,
     color: "text-green-700",
-    href: "/admin/post",
+    href: "/admin/posts",
+  },
+  {
+    label: "Bookings",
+    icon: BookmarkPlus,
+    color: "text-green-700",
+    href: "/admin/bookings",
   },
   {
     label: "Settings",

@@ -6,12 +6,12 @@ import {
   useUpdateUserMutation,
 } from "@/redux/api/userApi";
 import { getUserInfo } from "@/services/auth.service";
-import { IUserInfoType } from "@/types";
+import { IUserInfoType, SelectOptions } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import SelectForm from "./select";
+import FormSelectField from "./FormSelectField";
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
@@ -33,8 +33,8 @@ type IProfileUpdateProps = {
 };
 const ProfileUpdate = ({ urlPath }: IProfileUpdateProps) => {
   const { userId } = getUserInfo() as IUserInfoType;
-  const [selectedGender, setSelectedGender] = useState("male");
-  const [selectedBloodGroup, setSelectedBloodGroup] = useState("A+");
+  const [selectedGender, setSelectedGender] = useState();
+  const [selectedBloodGroup, setSelectedBloodGroup] = useState();
 
   const handleGenderChange = (e: any) => {
     setSelectedGender(e.target.value);
@@ -51,8 +51,22 @@ const ProfileUpdate = ({ urlPath }: IProfileUpdateProps) => {
   if (isLoading) {
     return <Loading />;
   }
-  const { id, name, profile } = data;
+  const { id, name, profile } = !!data && data;
+  const gender =
+    profile?.gender.toString().charAt(0).toUpperCase() +
+    profile?.gender.toString().slice(1);
+  const bloodGroup =
+    profile?.bloodGroup.toString().charAt(0).toUpperCase() +
+    profile?.bloodGroup.toString().slice(1);
 
+  const genderId = {
+    label: gender,
+    value: gender,
+  };
+  const bloodGroupId = {
+    label: bloodGroup,
+    value: bloodGroup,
+  };
   const formIsLoading = form.formState.isSubmitting;
 
   const onSubmit: SubmitHandler<FormValues> = async (values: any) => {
@@ -64,10 +78,18 @@ const ProfileUpdate = ({ urlPath }: IProfileUpdateProps) => {
         router.push(`${urlPath}`);
         toast.success("Profile Successfully");
       }
-    } catch (error) {
-      console.log(`${error}`);
+    } catch (error: any) {
+      toast.error(`${error.message}`);
     }
   };
+
+  const bloodOptions = bloodGroupOptions?.map((bloodGroup) => {
+    return {
+      label: bloodGroup?.label,
+      value: bloodGroup?.value,
+    };
+  });
+
   return (
     <section className="flex h-screen items-center justify-center">
       <div className="w-full px-2 py-12 sm:px-2 sm:py-16 lg:px-2 lg:py-24">
@@ -196,20 +218,18 @@ const ProfileUpdate = ({ urlPath }: IProfileUpdateProps) => {
                 />
               </div>
               <div>
-                <Label className="my-2" title="bloodGroup" htmlFor="bloodGroup">
-                  bloodGroup
-                </Label>
                 <FormField
                   name="bloodGroup"
                   render={({ field }) => (
                     <FormItem className="col-span-12 lg:col-span-10">
                       <FormControl className="m-0 p-0">
-                        <SelectForm
+                        <FormSelectField
+                          name="bloodGroup"
                           label="Blood Group"
-                          options={bloodGroupOptions}
-                          value={selectedBloodGroup}
-                          onChange={handleBloodGroupChange}
-                          defaultValue={data?.profile?.bloodGroup}
+                          options={bloodOptions as SelectOptions[]}
+                          // value={selectedBloodGroup}
+                          handleChange={handleBloodGroupChange}
+                          defaultValue={bloodGroupId}
                         />
                       </FormControl>
                     </FormItem>
@@ -217,20 +237,17 @@ const ProfileUpdate = ({ urlPath }: IProfileUpdateProps) => {
                 />
               </div>
               <div>
-                <Label className="my-2" title="gender" htmlFor="gender">
-                  Gender
-                </Label>
                 <FormField
                   name="gender"
                   render={({ field }) => (
                     <FormItem className="col-span-12 lg:col-span-10">
                       <FormControl className="m-0 p-0">
-                        <SelectForm
+                        <FormSelectField
+                          name="gender"
                           label="Gender"
                           options={genderOptions}
-                          value={selectedGender}
-                          onChange={handleGenderChange}
-                          defaultValue={data?.profile?.gender}
+                          handleChange={handleGenderChange}
+                          defaultValue={genderId}
                         />
                       </FormControl>
                     </FormItem>

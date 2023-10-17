@@ -48,12 +48,12 @@ export const bloodGroupOptions = [
 ];
 export const availabilityOptions = [
   {
-    label: "True",
-    value: "true",
+    label: "Available",
+    value: "Available",
   },
   {
-    label: "False",
-    value: "false",
+    label: "Upcoming",
+    value: "Upcoming",
   },
 ];
 

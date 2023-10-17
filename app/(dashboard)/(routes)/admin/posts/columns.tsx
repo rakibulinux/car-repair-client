@@ -7,7 +7,6 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { AlertDialogModal } from "@/components/alart-dialog";
-import { Preview } from "@/components/preview";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,7 +54,7 @@ export const columns: ColumnDef<IService>[] = [
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => {
-      return <Preview value={row.original.description?.slice(0, 50)!} />;
+      return <div>{row.original.description?.slice(0, 50)}</div>;
     },
   },
 

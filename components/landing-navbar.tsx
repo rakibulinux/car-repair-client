@@ -8,12 +8,12 @@ import { getUserInfo } from "@/services/auth.service";
 import { IUserInfoType } from "@/types";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import { ModeToggle } from "./DarkLight";
+import { ModeToggle } from "./dark-light";
 import Search from "./search";
 
 const navItems = [
   { name: "HOME", url: "/" },
-  { name: "MENU", url: "/menu" },
+  { name: "Service", url: "/service" },
   { name: "CONTACT", url: "/contact" },
 ];
 
@@ -74,7 +74,9 @@ export const LandingNavbar = () => {
                     <Link href={item.url}>{item.name}</Link>
                   </li>
                 ))}
-                <ModeToggle />
+                <div className="mb-3">
+                  <ModeToggle />
+                </div>
               </ul>
             </nav>
           </div>
@@ -105,7 +107,13 @@ export const LandingNavbar = () => {
               </div>
             </div>
 
-            <div className="block md:hidden">
+            <div className="flex md:hidden justify-center items-center gap-2">
+              <Link
+                className="rounded-md bg-sky-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                href="/sign-in"
+              >
+                Login
+              </Link>
               <button
                 onClick={toggleMobileMenu}
                 className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"

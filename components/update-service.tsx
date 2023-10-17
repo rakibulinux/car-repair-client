@@ -5,37 +5,40 @@ import {
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
 import { SelectOptions } from "@/types";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import FormSelectField from "./FormSelectField";
+import { Editor } from "./editor";
+import { FileUpload } from "./file-upload";
 import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
 
 type FormValues = {
   name?: string;
   description?: string;
   price?: number;
-  availability?: boolean;
+  availability?: "Available" | "Upcoming";
   image?: string;
 };
 
 const UpdateService = ({ params }: any) => {
-  const [selectedAvailability, setSelectedAvailability] = useState<string>();
+  const [selectedAvailability, setSelectedAvailability] = useState<
+    "Available" | "Upcoming"
+  >();
+  const [selectedImage, setSelectedImage] = useState<string>("");
   const { data } = useServiceQuery(params?.id);
   const service = data && data;
-  console.log(service);
-
-  const availability =
-    service?.availability.toString().charAt(0).toUpperCase() +
-    service?.availability.toString().slice(1);
+  const onImageUpload = (data: any) => {
+    setSelectedImage(data.image);
+  };
   const availabilityId = {
-    label: availability,
-    value: availability,
+    label: service?.availability,
+    value: service?.availability,
   };
   const [updateService] = useUpdateServiceMutation();
   const router = useRouter();
@@ -46,9 +49,8 @@ const UpdateService = ({ params }: any) => {
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
     const price = Number(data.price);
     data["price"] = price || service?.price;
-    data["availability"] =
-      (selectedAvailability === "false" && false) ||
-      (selectedAvailability === "true" && true);
+    data["image"] = selectedImage || service?.image;
+    data["availability"] = selectedAvailability || service?.availability;
     try {
       const res = await updateService({ id: params?.id, body: data }).unwrap();
       if (res?.id) {
@@ -68,7 +70,7 @@ const UpdateService = ({ params }: any) => {
               mx-auto mb-0 mt-8 space-y-4
               "
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="">
             <div>
               <Label className="my-2" title="name" htmlFor="name">
                 Service Name
@@ -91,27 +93,7 @@ const UpdateService = ({ params }: any) => {
                 )}
               />
             </div>
-            <div>
-              <Label className="my-2" title="description" htmlFor="description">
-                Description
-              </Label>
-              <FormField
-                name="description"
-                render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0">
-                      <Textarea
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
-                        disabled={isLoading}
-                        placeholder="description"
-                        {...field}
-                        defaultValue={service?.description!}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
+
             <div>
               <Label className="my-2" title="Price" htmlFor="price">
                 Price
@@ -147,20 +129,54 @@ const UpdateService = ({ params }: any) => {
               <Label className="my-2" title="image" htmlFor="image">
                 Image
               </Label>
-              <FormField
-                name="image"
+              {data?.image && (
+                <Image
+                  src={selectedImage ? selectedImage : data?.image}
+                  alt="service image"
+                  height={300}
+                  width={900}
+                />
+              )}
+              {!selectedImage && (
+                <FileUpload
+                  endpoint="serviceAttachment"
+                  onChange={(url) => {
+                    if (url) {
+                      onImageUpload({ image: url });
+                    }
+                  }}
+                />
+              )}
+            </div>
+            <div>
+              <Label className="my-2" title="description" htmlFor="description">
+                Description
+              </Label>
+              {/* <FormField
+                name="description"
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-10">
                     <FormControl className="m-0 p-0">
-                      <Input
+                      <Textarea
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
                         disabled={isLoading}
-                        placeholder="image"
+                        placeholder="description"
                         {...field}
-                        type="text"
-                        defaultValue={service?.image}
+                        defaultValue={service?.description!}
                       />
                     </FormControl>
+                  </FormItem>
+                )}
+              /> */}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Editor {...field} value={data?.description} />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

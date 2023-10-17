@@ -5,8 +5,16 @@ import { User2 } from "lucide-react";
 import { Heading } from "@/components/heading";
 import Profile from "@/components/profile";
 import { cn } from "@/lib/utils";
+import { getUserInfo } from "@/services/auth.service";
+import { IUserInfoType } from "@/types";
+import { redirect } from "next/navigation";
 
 const ProfilePage = () => {
+  const { role } = getUserInfo() as IUserInfoType;
+  console.log(role);
+  if (role !== "customer") {
+    redirect("/");
+  }
   return (
     <div>
       <Heading
