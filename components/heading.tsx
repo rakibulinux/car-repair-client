@@ -1,11 +1,9 @@
-import { Icon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-
+import { XIcon } from "lucide-react";
 interface HeadingProps {
   title: string;
   description: string;
-  icon: Icon;
+  icon: typeof XIcon;
   iconColor?: string;
   bgColor?: string;
 }
@@ -25,9 +23,7 @@ export const Heading = ({
         </div>
         <div>
           <h2 className="text-3xl font-bold">{title}</h2>
-          <p className="text-sm text-muted-foreground">
-            {description}
-          </p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
       </div>
     </>
