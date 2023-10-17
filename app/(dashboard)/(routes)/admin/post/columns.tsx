@@ -25,7 +25,6 @@ export const columns: ColumnDef<IService>[] = [
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
-      console.log(row);
       const service = row.original;
       return (
         <Image

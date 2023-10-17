@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import FormSelectField from "./FormSelectField";
 import Categories from "./categories";
+import { FileUpload } from "./file-upload";
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
@@ -25,19 +26,25 @@ type FormValues = {
 
 const CreateService = () => {
   const [selectedCategory, setSelectedCategoryId] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<string>("");
   const [selectedAvailability, setSelectedAvailability] =
     useState<string>("true");
-
+  console.log(selectedImage);
   const [addService] = useAddServiceMutation();
   const router = useRouter();
   const form = useForm<FormValues>({});
 
   const isLoading = form.formState.isSubmitting;
-
+  const onImageUpload = (data: any) => {
+    console.log(data);
+    setSelectedImage(data.image);
+  };
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
     const price = Number(data.price);
+
     console.log(data);
     data["categoryId"] = selectedCategory;
+    data["image"] = selectedImage;
     data["price"] = price;
     data["availability"] =
       (selectedAvailability === "false" && false) ||
@@ -136,7 +143,20 @@ const CreateService = () => {
               <Label className="my-2" title="image" htmlFor="image">
                 Image
               </Label>
-              <FormField
+              {selectedImage ? (
+                <p>Image added</p>
+              ) : (
+                <FileUpload
+                  endpoint="serviceAttachment"
+                  onChange={(url) => {
+                    if (url) {
+                      onImageUpload({ image: url });
+                    }
+                  }}
+                />
+              )}
+
+              {/* <FormField
                 name="image"
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-10">
@@ -151,7 +171,7 @@ const CreateService = () => {
                     </FormControl>
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
 
             <div>

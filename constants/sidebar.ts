@@ -69,10 +69,10 @@ export const adminRoutes = [
     href: "/admin/categories",
   },
   {
-    label: "Code Generation",
+    label: "Posts",
     icon: Code,
     color: "text-green-700",
-    href: "/admin/code",
+    href: "/admin/post",
   },
   {
     label: "Settings",
