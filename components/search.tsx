@@ -1,6 +1,5 @@
-import myBgLogo from "@/assets/my-bg2.png";
-import Image from "next/image";
-import Link from "next/link";
+import { ModeToggle } from "./DarkLight";
+import { DropdownMenuItems } from "./dropdown-menu";
 
 const Search = () => {
   return (
@@ -60,16 +59,8 @@ const Search = () => {
           />
         </svg>
       </Link> */}
-      <Link href="/dashboard" className="block shrink-0">
-        <span className="sr-only">Profile</span>
-        <Image
-          alt="Man"
-          src={myBgLogo}
-          className="h-10 w-10 rounded-full object-cover"
-          height={10}
-          width={10}
-        />
-      </Link>
+      <DropdownMenuItems />
+      <ModeToggle />
     </div>
   );
 };

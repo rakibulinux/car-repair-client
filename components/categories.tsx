@@ -6,12 +6,14 @@ type CategoriesProps = {
   name: string;
   label?: string;
   setSelectedCategoryId: (el: any) => void;
+  defaultValue?: SelectOptions;
 };
 
 const Categories = ({
   name,
   label,
   setSelectedCategoryId,
+  defaultValue,
 }: CategoriesProps) => {
   const query: Record<string, any> = {};
   const { data: categoryData } = useCategoriesQuery(query);
@@ -30,6 +32,7 @@ const Categories = ({
         label={label}
         options={categoryOptions as SelectOptions[]}
         handleChange={setSelectedCategoryId}
+        defaultValue={defaultValue}
       />
     </>
   );

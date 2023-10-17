@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { ToasterProvider } from "@/components/toaster-provider";
 import { ModalProvider } from "@/components/modal-provider";
+import { ToasterProvider } from "@/components/toaster-provider";
 
-import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import Providers from "@/lib/Providers";
+import "./globals.css";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,14 @@ export default async function RootLayout({
           <body className={font.className}>
             <ToasterProvider />
             <ModalProvider />
-            {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
           </body>
         </html>
       </Providers>

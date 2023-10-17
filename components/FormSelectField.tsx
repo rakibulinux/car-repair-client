@@ -43,8 +43,10 @@ const FormSelectField = ({
         render={({ field: { value, onChange } }) => (
           <Select onValueChange={handleChange ? handleChange : onChange}>
             <FormControl>
-              <SelectTrigger name="categoryId">
-                <SelectValue placeholder={name} />
+              <SelectTrigger name={"categoryId"}>
+                <SelectValue
+                  placeholder={defaultValue ? defaultValue.label : name}
+                />
               </SelectTrigger>
             </FormControl>
             <SelectContent>

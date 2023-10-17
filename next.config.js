@@ -7,6 +7,7 @@ const nextConfig = {
       "cdn.openai.com",
       "avatars.githubusercontent.com",
       "smartdata.tonytemplates.com",
+      "github.com",
     ],
   },
 };

@@ -64,5 +64,5 @@ export const {
   useServicesQuery, // get all
   useServiceQuery, // get single
   useUpdateServiceMutation, // update
-  useDeleteServiceMutation, // delete
+  useDeleteServiceMutation: UseDeleteServiceMutation, // delete
 } = serviceApi;

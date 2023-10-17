@@ -1,5 +1,5 @@
-import AdminUpdate from "@/components/admin-edit";
+import UpdateService from "@/components/update-service";
 
 export default function Page({ params }: any) {
-  return <AdminUpdate params={params} />;
+  return <UpdateService params={params} />;
 }

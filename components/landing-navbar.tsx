@@ -8,6 +8,7 @@ import { getUserInfo } from "@/services/auth.service";
 import { IUserInfoType } from "@/types";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { ModeToggle } from "./DarkLight";
 import Search from "./search";
 
 const navItems = [
@@ -73,6 +74,7 @@ export const LandingNavbar = () => {
                     <Link href={item.url}>{item.name}</Link>
                   </li>
                 ))}
+                <ModeToggle />
               </ul>
             </nav>
           </div>
@@ -95,6 +97,9 @@ export const LandingNavbar = () => {
                     >
                       Register
                     </Link>
+                    <div className="ml-4">
+                      <ModeToggle />
+                    </div>
                   </>
                 )}
               </div>

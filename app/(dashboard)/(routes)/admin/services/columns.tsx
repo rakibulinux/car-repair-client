@@ -5,6 +5,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
+import { AlertDialogModal } from "@/components/alart-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UseDeleteServiceMutation } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,7 +54,6 @@ export const columns: ColumnDef<IService>[] = [
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => {
-      console.log(row.original.description);
       return <div>{row.original.description?.slice(0, 50)}</div>;
     },
   },
@@ -76,8 +78,8 @@ export const columns: ColumnDef<IService>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original;
-
+      const service = row.original;
+      const [deleteService] = UseDeleteServiceMutation();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -89,20 +91,28 @@ export const columns: ColumnDef<IService>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+              onClick={() => navigator.clipboard.writeText(service.id)}
             >
-              Copy user ID
+              Copy Service ID
             </DropdownMenuItem>
-            <Link href={`/admin/services/edit/${user.id}`}>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(user.id)}
-              >
-                Edit
-              </DropdownMenuItem>
+            <Link href={`/admin/services/edit/${service.id}`}>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
             </Link>
+            <Link href={`/admin/services/details/${service.id}`}>
+              <DropdownMenuItem>Details</DropdownMenuItem>
+            </Link>
+            {/* <DropdownMenuItem> */}
+            {/* <DialogCloseButton
+                handleDelete={() => deleteService(service.id)}
+              /> */}
+            <AlertDialogModal
+              title="Delete"
+              handleDelete={() => deleteService(service.id)}
+            />
+            {/* </DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
+
+            {/* <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );
