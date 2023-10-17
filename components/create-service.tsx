@@ -2,6 +2,7 @@
 import { availabilityOptions } from "@/constants/global";
 import { useAddServiceMutation } from "@/redux/api/serviceApi";
 import { SelectOptions } from "@/types";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -144,7 +145,12 @@ const CreateService = () => {
                 Image
               </Label>
               {selectedImage ? (
-                <p>Image added</p>
+                <Image
+                  src={selectedImage}
+                  alt="service image"
+                  height={300}
+                  width={300}
+                />
               ) : (
                 <FileUpload
                   endpoint="serviceAttachment"
