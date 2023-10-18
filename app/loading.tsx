@@ -1,9 +1,7 @@
-import { Progress } from "@/components/ui/progress";
-
 const Loading = () => {
   return (
-    <div className="flex justify-center items-center">
-      <Progress value={33} />
+    <div className="flex items-center justify-center text-center">
+      <div className="w-40 h-40 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
     </div>
   );
 };

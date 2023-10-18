@@ -7,6 +7,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { AlertDialogModal } from "@/components/alart-dialog";
+import { Preview } from "@/components/preview";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,21 +16,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UseDeleteServiceMutation } from "@/redux/api/serviceApi";
-import { IService } from "@/types";
+import { UseDeletePostMutation } from "@/redux/api/postApi";
+import { IPost } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export const columns: ColumnDef<IService>[] = [
+export const columns: ColumnDef<IPost>[] = [
   {
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
-      const service = row.original;
+      const post = row.original;
       return (
         <Image
-          src={service.image} // Make sure "image" is a valid path to your image
-          alt={service.name} // Use the appropriate alt text
+          src={post.image} // Make sure "image" is a valid path to your image
+          alt={post.title} // Use the appropriate alt text
           width={100} // Customize the width of the image
           height={100} // Customize the height of the image
         />
@@ -37,7 +38,7 @@ export const columns: ColumnDef<IService>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
@@ -51,20 +52,16 @@ export const columns: ColumnDef<IService>[] = [
     },
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "content",
+    header: "Content",
     cell: ({ row }) => {
-      return <div>{row.original.description?.slice(0, 50)}</div>;
+      return <Preview value={row.original.content?.slice(0, 50)!} />;
     },
   },
 
   {
-    accessorKey: "price",
-    header: "Price",
-  },
-  {
-    accessorKey: "availability",
-    header: "Availability",
+    accessorKey: "authorId",
+    header: "Author",
   },
   {
     accessorKey: "createdAt",
@@ -78,8 +75,8 @@ export const columns: ColumnDef<IService>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const service = row.original;
-      const [deleteService] = UseDeleteServiceMutation();
+      const post = row.original;
+      const [deletePost] = UseDeletePostMutation();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -91,23 +88,23 @@ export const columns: ColumnDef<IService>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(service.id)}
+              onClick={() => navigator.clipboard.writeText(post.id)}
             >
-              Copy Service ID
+              Copy Post ID
             </DropdownMenuItem>
-            <Link href={`/admin/services/edit/${service.id}`}>
+            <Link href={`/admin/posts/edit/${post.id}`}>
               <DropdownMenuItem>Edit</DropdownMenuItem>
             </Link>
-            <Link href={`/admin/services/details/${service.id}`}>
+            <Link href={`/admin/posts/details/${post.id}`}>
               <DropdownMenuItem>Details</DropdownMenuItem>
             </Link>
             {/* <DropdownMenuItem> */}
             {/* <DialogCloseButton
-                handleDelete={() => deleteService(service.id)}
+                handleDelete={() => deletePost(post.id)}
               /> */}
             <AlertDialogModal
               title="Delete"
-              handleDelete={() => deleteService(service.id)}
+              handleDelete={() => deletePost(post.id)}
             />
             {/* </DropdownMenuItem> */}
             <DropdownMenuSeparator />

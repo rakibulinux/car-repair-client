@@ -1,6 +1,6 @@
 "use client";
-
 import carRapair from "@/assets/logo.png";
+import carRapairBlack from "@/assets/logo_black.png";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -28,14 +28,22 @@ export const LandingNavbar = () => {
   };
 
   return (
-    <header className="px-4 bg-gray-900">
+    <header className="px-4">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo Part */}
           <div className="md:flex md:items-center md:gap-12">
             <Link href="/" className="flex items-center">
               <Image
+                className="hidden dark:block"
                 src={carRapair}
+                alt="car repair service"
+                width={150}
+                height={100}
+              />
+              <Image
+                className="my-2 block dark:hidden"
+                src={carRapairBlack}
                 alt="car repair service"
                 width={150}
                 height={100}
@@ -47,10 +55,7 @@ export const LandingNavbar = () => {
             <nav aria-label="Global">
               <ul className="flex items-center gap-6 text-sm">
                 {navItems.map((item) => (
-                  <li
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    key={item.url}
-                  >
+                  <li className="" key={item.url}>
                     <Link href={item.url}>{item.name}</Link>
                   </li>
                 ))}
@@ -60,17 +65,14 @@ export const LandingNavbar = () => {
 
           {/* Mobile Menu */}
           <div
-            className={`absolute top-16 left-0 w-full bg-[#111827] md:hidden z-10 ${
+            className={`absolute top-16 left-0 w-full md:hidden z-10 ${
               isMobileMenuOpen ? "block" : "hidden"
             }`}
           >
             <nav aria-label="Global">
               <ul className="flex items-center gap-6 text-sm flex-col">
                 {navItems.map((item) => (
-                  <li
-                    className="text-gray-100 transition hover:text-gray-100/75"
-                    key={item.url}
-                  >
+                  <li className="" key={item.url}>
                     <Link href={item.url}>{item.name}</Link>
                   </li>
                 ))}

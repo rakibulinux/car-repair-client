@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -13,9 +13,9 @@ import { IUserInfoType } from "@/types";
 export default function HomePage() {
   const router = useRouter();
   const { role } = getUserInfo() as IUserInfoType;
-  if (!role) {
-    redirect("/");
-  }
+  // if (!role) {
+  //   redirect("/");
+  // }
   return (
     <div>
       <div className="mb-8 space-y-4">

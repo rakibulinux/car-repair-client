@@ -86,6 +86,7 @@ export type IPost = {
   id: string;
   title: string;
   content: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
   authorId: string | null;

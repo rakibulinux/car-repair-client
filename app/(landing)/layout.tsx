@@ -5,7 +5,7 @@ import Providers from "@/lib/Providers";
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Providers>
-      <main className="bg-[#111827]">
+      <main className="">
         <LandingNavbar />
         <div className="">
           {children}

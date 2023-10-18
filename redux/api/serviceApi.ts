@@ -9,7 +9,24 @@ export const serviceApi = baseApi.injectEndpoints({
     services: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: `${SERVICE_URL}`,
+          url: `${SERVICE_URL}?availability=Available`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: IService[], meta: IMeta) => {
+        return {
+          services: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.service],
+    }),
+    // get upcoming all services
+    upcomingServices: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${SERVICE_URL}?availability=Upcoming`,
           method: "GET",
           params: arg,
         };
@@ -61,6 +78,7 @@ export const serviceApi = baseApi.injectEndpoints({
 
 export const {
   useAddServiceMutation, // create
+  useUpcomingServicesQuery,
   useServicesQuery, // get all
   useServiceQuery, // get single
   useUpdateServiceMutation, // update
