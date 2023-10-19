@@ -105,7 +105,7 @@ export const customerRoutes = [
     label: "Image Generation",
     icon: ImageIcon,
     color: "text-pink-700",
-    href: "/customer/image",
+    href: "/customer/booking-history",
   },
   {
     label: "Video Generation",

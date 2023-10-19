@@ -38,7 +38,9 @@ const CreateUser = ({ buttonTitle, urlPath }: IProps) => {
       if (res?.id) {
         router.push(`${urlPath}`);
         toast.success(
-          `${role === "super_admin" ? "Admin" : "User"} Created Successfully`
+          `${
+            role === "super_admin" ? "Admin" : "Customer"
+          } Created Successfully`
         );
       }
     } catch (error: any) {

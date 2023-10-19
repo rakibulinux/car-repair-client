@@ -8,9 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Input } from "../ui/input";
 
 type FormValues = {
   email: string;
@@ -28,8 +28,21 @@ const SignIn = () => {
       password: "",
     },
   });
-
   const isLoading = form.formState.isSubmitting;
+
+  // const onFinish: SubmitHandler<FormValues> = async (values) => {
+  //   const result = await signIn("car-repair-api", {
+  //     email: values.email,
+  //     password: values.password,
+  //     redirect: false,
+  //     // callbackUrl: "/",
+  //   });
+  //   console.log(result);
+  //   // console.log(result, "result");
+  //   if (result?.ok && !result.error) {
+  //     router.push("/");
+  //   }
+  // };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {

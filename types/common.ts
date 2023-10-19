@@ -44,6 +44,21 @@ export type IAdmin = {
   createdAt: Date;
   updatedAt: Date;
 };
+export type UserData = {
+  user: {
+    name: string | undefined;
+    email: string | undefined;
+    image: string | undefined;
+  };
+  accessToken: string;
+  userId: string;
+  emailId: string;
+  role: string;
+  password: string;
+  iat: number;
+  exp: number;
+  jti: string;
+};
 
 export type IService = {
   id: string;
@@ -51,6 +66,7 @@ export type IService = {
   description: string | null;
   price: number;
   availability: "Available" | "Upcoming";
+  location?: string;
   image: string;
   categoryId: string;
   createdAt: Date;
@@ -78,6 +94,8 @@ export type ICategory = {
 export type IFeedback = {
   id: string;
   comment: string;
+  suggestion: string;
+  user: IAdmin;
   userId: string;
   createdAt: Date;
   updatedAt: Date;

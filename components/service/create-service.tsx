@@ -1,48 +1,61 @@
 "use client";
-
-import { useAddReviewMutation } from "@/redux/api/reviewApi";
-import { getUserInfo } from "@/services/auth.service";
-import { IUserInfoType } from "@/types";
+import { availabilityOptions } from "@/constants/global";
+import { useAddServiceMutation } from "@/redux/api/serviceApi";
+import { SelectOptions } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import Categories from "./categories";
-import { Editor } from "./editor";
-import { FileUpload } from "./file-upload";
-import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import FormSelectField from "../FormSelectField";
+import Categories from "../categories";
+import { Editor } from "../editor";
+import { FileUpload } from "../file-upload";
+import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 type FormValues = {
-  title: string;
-  content: string;
+  name: string;
+  description: string;
+  price: number;
+  availability: "Available" | "Upcoming";
   image: string;
-  authorId: string;
   categoryId: string;
 };
 
-const CreateReview = () => {
+const CreateService = () => {
   const [selectedCategory, setSelectedCategoryId] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string>("");
-  const { userId } = getUserInfo() as IUserInfoType;
-  const [addReview] = useAddReviewMutation();
+  const [selectedAvailability, setSelectedAvailability] = useState<
+    "Available" | "Upcoming"
+  >("Available");
+  const [addService] = useAddServiceMutation();
+  const router = useRouter();
   const form = useForm<FormValues>({});
   const { isSubmitting, isValid } = form.formState;
   const onImageUpload = (data: any) => {
     setSelectedImage(data.image);
   };
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    const price = Number(data.price);
+
     data["categoryId"] = selectedCategory;
-    data["authorId"] = userId;
     data["image"] = selectedImage;
-    console.log(data);
+    data["price"] = price;
+    data["availability"] = selectedAvailability;
     try {
-      const res = await addReview({ ...data }).unwrap();
+      const res = await addService({ ...data }).unwrap();
       if (res?.id) {
-        // router.push("/admin/reviews");
-        toast.success("Review Added Successfully");
+        router.push("/admin/services");
+        toast.success("Service Created Successfully");
       }
     } catch (error: any) {
       toast.error(`${error.message}`);
@@ -59,18 +72,40 @@ const CreateReview = () => {
         >
           <div className="">
             <div className="my-4">
-              <Label className="my-2" title="title" htmlFor="title">
-                Review Title
+              <Label className="my-2" title="name" htmlFor="name">
+                Service Name
               </Label>
               <FormField
-                name="title"
+                name="name"
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-10">
                     <FormControl className="m-0 p-0">
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
                         disabled={!isValid || isSubmitting}
-                        placeholder="title"
+                        placeholder="name"
+                        {...field}
+                        type="text"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="my-4">
+              <Label className="my-2" title="Price" htmlFor="price">
+                Price
+              </Label>
+              <FormField
+                name="price"
+                render={({ field }) => (
+                  <FormItem className="col-span-12 lg:col-span-10">
+                    <FormControl className="m-0 p-0">
+                      <Input
+                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2"
+                        disabled={!isValid || isSubmitting}
+                        placeholder="price"
                         {...field}
                         type="text"
                       />
@@ -80,13 +115,21 @@ const CreateReview = () => {
               />
             </div>
             <div className="my-4">
+              <FormSelectField
+                name="availability"
+                label="Availability"
+                options={availabilityOptions as SelectOptions[]}
+                handleChange={(el: any) => setSelectedAvailability(el)}
+              />
+            </div>
+            <div className="my-4">
               <Label className="my-2 text-right" title="image" htmlFor="image">
                 Image
               </Label>
               {selectedImage ? (
                 <Image
                   src={selectedImage}
-                  alt="review image"
+                  alt="service image"
                   height={300}
                   width={900}
                 />
@@ -112,12 +155,12 @@ const CreateReview = () => {
               />
             </div>
             <div className="my-4">
-              <Label className="my-2" title="content" htmlFor="content">
-                Content
+              <Label className="my-2" title="description" htmlFor="description">
+                Description
               </Label>
               <FormField
                 control={form.control}
-                name="content"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -135,7 +178,7 @@ const CreateReview = () => {
             disabled={!isValid || isSubmitting}
             size="icon"
           >
-            Create Review
+            Create Service
           </Button>
         </form>
       </Form>
@@ -143,4 +186,4 @@ const CreateReview = () => {
   );
 };
 
-export default CreateReview;
+export default CreateService;

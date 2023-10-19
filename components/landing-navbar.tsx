@@ -9,12 +9,13 @@ import { IUserInfoType } from "@/types";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { ModeToggle } from "./dark-light";
-import Search from "./search";
+import SearchInput from "./search";
 
 const navItems = [
-  { name: "HOME", url: "/" },
+  { name: "Home", url: "/" },
   { name: "Service", url: "/service" },
-  { name: "CONTACT", url: "/contact" },
+  { name: "Upcoming", url: "/upcoming" },
+  { name: "Feedback", url: "/feedback" },
 ];
 
 export const LandingNavbar = () => {
@@ -70,7 +71,7 @@ export const LandingNavbar = () => {
             }`}
           >
             <nav aria-label="Global">
-              <ul className="flex items-center gap-6 text-sm flex-col">
+              <ul className="flex items-center gap-6 text-sm flex-col bg-gray-300 dark:bg-black ">
                 {navItems.map((item) => (
                   <li className="" key={item.url}>
                     <Link href={item.url}>{item.name}</Link>
@@ -86,7 +87,7 @@ export const LandingNavbar = () => {
             <div className="sm:flex sm:gap-4">
               <div className="hidden sm:flex">
                 {isSignedIn ? (
-                  <Search />
+                  <SearchInput />
                 ) : (
                   <>
                     <Link
@@ -110,12 +111,14 @@ export const LandingNavbar = () => {
             </div>
 
             <div className="flex md:hidden justify-center items-center gap-2">
-              <Link
-                className="rounded-md bg-sky-600 px-5 py-2.5 text-sm font-medium text-white shadow"
-                href="/sign-in"
-              >
-                Login
-              </Link>
+              {!isSignedIn && (
+                <Link
+                  className="rounded-md bg-sky-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                  href="/sign-in"
+                >
+                  Login
+                </Link>
+              )}
               <button
                 onClick={toggleMobileMenu}
                 className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"

@@ -77,6 +77,26 @@ export const monthOptions = months.map((month: string) => {
     value: month,
   };
 });
+export const years = [
+  "2011",
+  "2012",
+  "2013",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+];
+export const yearOptions = years.map((month: string) => {
+  return {
+    label: month,
+    value: month,
+  };
+});
 
 export const days = [
   "SATURDAY",

@@ -1,10 +1,7 @@
 "use client";
-import Loading from "@/app/loading";
 import { usePostsQuery } from "@/redux/api/postApi";
 import { useDebounce } from "@/redux/hooks";
 
-import { getUserInfo } from "@/services/auth.service";
-import { IUserInfoType } from "@/types";
 import { useState } from "react";
 import CardListPost from "./card-list-post";
 
@@ -15,8 +12,6 @@ const Post = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const query: Record<string, any> = {};
-  const { role } = getUserInfo() as IUserInfoType;
-  console.log(role);
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -31,10 +26,8 @@ const Post = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = usePostsQuery({ ...query });
-  if (isLoading) {
-    return <Loading />;
-  }
+  const { data } = usePostsQuery({ ...query });
+
   return (
     <div className="mx-auto w-11/12 my-4">
       <CardListPost items={data?.posts} />

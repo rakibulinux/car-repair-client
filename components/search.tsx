@@ -1,68 +1,87 @@
+"use client";
+import { useServicesQuery } from "@/redux/api/serviceApi";
+import { useDebounce } from "@/redux/hooks";
+import { IService } from "@/types";
+import Link from "next/link";
+import { useState } from "react";
 import { ModeToggle } from "./dark-light";
 import { DropdownMenuItems } from "./dropdown-menu";
 
-const Search = () => {
+const SearchInput = () => {
+  const [filteredServices, setFilteredServices] = useState<IService[]>([]);
+  const [size, setSize] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const query: Record<string, any> = {};
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+
+  const debouncedTerm = useDebounce({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
+  const { data: services } = useServicesQuery({ ...query });
+
+  const handleSearchs = (filters: any) => {
+    // Check if services is undefined and handle that case
+    if (!services) {
+      setFilteredServices([]);
+      return;
+    }
+
+    // Implement the filtering logic based on the filters and your services data
+    const filtered = services.services.filter((service: IService) => {
+      const nameMatch =
+        !filters.name ||
+        service.name.toLowerCase().includes(filters.name.toLowerCase());
+      return nameMatch;
+    });
+
+    setFilteredServices(filtered);
+  };
+
+  // Handle search on every change
+  const handleSearchOnChange = (text: string) => {
+    setSearchTerm(text); // Update the search term state
+    handleSearchs({ name: text }); // Perform search as you type
+  };
+
   return (
     <div className="flex gap-2">
       <div className="relative">
         <label className="sr-only" htmlFor="search">
-          {" "}
-          Search{" "}
+          Search
         </label>
-
         <input
-          className="h-10 w-full rounded-full border-none bg-white pe-10 ps-4 text-sm shadow-sm sm:w-56"
+          className="h-10 w-full rounded-full border-none pe-10 ps-4 text-sm shadow-sm sm:w-56"
           id="search"
           type="search"
-          placeholder="Search website..."
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={(e) => handleSearchOnChange(e.target.value)}
         />
-
-        <button
-          type="button"
-          className="absolute end-1 top-1/2 -translate-y-1/2 rounded-full bg-gray-50 p-2 text-gray-600 transition hover:text-gray-700"
-        >
-          <span className="sr-only">Search</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button>
+        <ul className="absolute">
+          {debouncedTerm &&
+            filteredServices &&
+            filteredServices.map((service) => (
+              <Link key={service.id} href={`/service/${service.id}`}>
+                <li>{service.name}</li>
+              </Link>
+            ))}
+        </ul>
       </div>
-      {/* Notifications */}
-      {/* <Link
-        href="/"
-        className="block shrink-0 rounded-full bg-white p-2.5 text-gray-600 shadow-sm hover:text-gray-700"
-      >
-        <span className="sr-only">Notifications</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-          />
-        </svg>
-      </Link> */}
       <DropdownMenuItems />
       <ModeToggle />
     </div>
   );
 };
 
-export default Search;
+export default SearchInput;

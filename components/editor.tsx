@@ -45,13 +45,14 @@ export const Editor = ({ onChange, value }: EditorProps) => {
     "image",
   ];
   return (
-    <div className="bg-white">
+    <div className="bg-gray-200 dark:bg-white dark:text-black">
       <ReactQuill
         theme="snow"
         value={value}
         onChange={onChange}
         modules={modules}
         formats={formats}
+        className="h-72"
       />
     </div>
   );

@@ -2,7 +2,8 @@ import { formatPrice } from "@/lib/format";
 import { BookOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { IconBadge } from "./icon-badge";
+import Booking from "../booking/booking";
+import { IconBadge } from "../icon-badge";
 
 interface CourseCardProps {
   id: string;
@@ -22,16 +23,16 @@ export const Card = ({
   availability,
 }: CourseCardProps) => {
   return (
-    <Link href={`/service/${id}`}>
-      <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg h-full  bg-white dark:bg-gray-900">
+    <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg h-full  bg-white dark:bg-gray-900">
+      <Link className="mb-4" href={`/service/${id}`}>
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image fill className="object-cover" alt={name} src={image} />
         </div>
-        <div className="flex flex-col p-3 pt-2">
+        <div className="flex flex-col p-6">
           <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
             {name}
           </div>
-          <p className="text-xs text-muted-foreground">{category}</p>
+          {/* <p className="text-xs text-muted-foreground">{category}</p> */}
           <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
             <div className="flex items-center gap-x-1 text-slate-500">
               <IconBadge size="sm" icon={BookOpen} />
@@ -43,7 +44,12 @@ export const Card = ({
             {formatPrice(price)}
           </p>
         </div>
-      </div>
-    </Link>
+      </Link>
+      {availability === "Available" && (
+        <div className="flex justify-end p-3">
+          <Booking id={id} />
+        </div>
+      )}
+    </div>
   );
 };

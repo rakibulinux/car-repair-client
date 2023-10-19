@@ -1,7 +1,6 @@
 "use client";
 
 import { ShieldHalf } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 import Loading from "@/app/loading";
 import { DataTable } from "@/components/data-table";
@@ -21,8 +20,6 @@ type FormValues = {
 };
 
 const AdminListPage = () => {
-  const router = useRouter();
-
   const [size, setSize] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("");

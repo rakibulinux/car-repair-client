@@ -1,10 +1,9 @@
 import Footer from "@/components/footer";
 import { LandingNavbar } from "@/components/landing-navbar";
-import Providers from "@/lib/Providers";
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Providers>
+    <>
       <main className="">
         <LandingNavbar />
         <div className="">
@@ -12,7 +11,7 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
           <Footer />
         </div>
       </main>
-    </Providers>
+    </>
   );
 };
 

@@ -10,13 +10,19 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import FormSelectField from "./FormSelectField";
-import { Editor } from "./editor";
-import { FileUpload } from "./file-upload";
-import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import FormSelectField from "../FormSelectField";
+import { Editor } from "../editor";
+import { FileUpload } from "../file-upload";
+import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 type FormValues = {
   name?: string;

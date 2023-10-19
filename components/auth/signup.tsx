@@ -7,9 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Input } from "../ui/input";
 
 type FormValues = {
   name: string;

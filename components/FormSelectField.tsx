@@ -44,9 +44,7 @@ const FormSelectField = ({
           <Select onValueChange={handleChange ? handleChange : onChange}>
             <FormControl>
               <SelectTrigger name={"categoryId"}>
-                <SelectValue
-                  placeholder={defaultValue ? defaultValue.label : name}
-                />
+                <SelectValue placeholder={placeholder ? placeholder : name} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>

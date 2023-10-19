@@ -1,4 +1,4 @@
-import UpcomingService from "@/components/upcoming-service";
+import UpcomingService from "@/components/service/upcoming-service";
 
 export default function Page() {
   return (

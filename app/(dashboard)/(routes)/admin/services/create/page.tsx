@@ -1,4 +1,4 @@
-import CreateService from "@/components/create-service";
+import CreateService from "@/components/service/create-service";
 
 export default function Page() {
   return (

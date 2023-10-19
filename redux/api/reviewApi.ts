@@ -34,7 +34,7 @@ export const reviewApi = baseApi.injectEndpoints({
     addReview: build.mutation({
       query: (data) => ({
         url: REVIEW_URL,
-        method: "REVIEW",
+        method: "POST",
         data,
       }),
       invalidatesTags: [tagTypes.reviews],
