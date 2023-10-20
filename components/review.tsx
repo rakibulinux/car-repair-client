@@ -107,7 +107,7 @@ const Review = ({ serviceId }: ReviewProps) => {
             </div>
             <CardFooter className="flex justify-end">
               <Button
-                className=" col-span-12 lg:col-span-2 w-full"
+                className="col-span-12 lg:col-span-2 w-full my-10"
                 type="submit"
                 disabled={!isValid || isSubmitting}
                 size="icon"

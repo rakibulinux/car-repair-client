@@ -2,11 +2,13 @@
 import { useServicesQuery } from "@/redux/api/serviceApi";
 import { useDebounce } from "@/redux/hooks";
 import { IService } from "@/types";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ModeToggle } from "./dark-light";
 import { DropdownMenuItems } from "./dropdown-menu";
-
+import { Card } from "./ui/card";
 const SearchInput = () => {
   const [filteredServices, setFilteredServices] = useState<IService[]>([]);
   const [size, setSize] = useState<number>(10);
@@ -15,6 +17,7 @@ const SearchInput = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const query: Record<string, any> = {};
+  const router = useRouter();
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -68,12 +71,24 @@ const SearchInput = () => {
           value={searchTerm}
           onChange={(e) => handleSearchOnChange(e.target.value)}
         />
-        <ul className="absolute">
+        <ul className="absolute z-10">
           {debouncedTerm &&
             filteredServices &&
             filteredServices.map((service) => (
               <Link key={service.id} href={`/service/${service.id}`}>
-                <li>{service.name}</li>
+                <Card
+                  onClick={() => router.push(`/service/${service.id}`)}
+                  key={service.id}
+                  className="p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer"
+                >
+                  <div className="flex items-center gap-x-4">
+                    {/* <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
+                  <service.icon className={cn("w-8 h-8", tool.color)} />
+                </div> */}
+                    <div className="font-semibold">{service.name}</div>
+                  </div>
+                  <ArrowRight className="w-5 h-5" />
+                </Card>
               </Link>
             ))}
         </ul>
