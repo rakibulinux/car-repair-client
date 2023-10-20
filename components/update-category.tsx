@@ -24,10 +24,10 @@ const UpdateCategory = ({ params }: any) => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data);
+    //console.log(data);
     try {
       const res = await updateCategory({ id: params?.id, body: data }).unwrap();
-      console.log(res);
+      //console.log(res);
       if (res?.id) {
         router.push("/admin/categories");
         toast.success("Category Updated Successfully");

@@ -18,7 +18,6 @@ interface IDateProps {
 }
 
 export function DatePicker({ date, setDate }: IDateProps) {
-  console.log(date);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -38,6 +37,9 @@ export function DatePicker({ date, setDate }: IDateProps) {
           mode="single"
           selected={date}
           onSelect={setDate}
+          disabled={(date) =>
+            date > new Date() || date < new Date("1900-01-01")
+          }
           initialFocus
         />
       </PopoverContent>

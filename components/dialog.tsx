@@ -36,7 +36,7 @@ type DialogProps = {
 const DialogBooking = ({ title }: DialogProps) => {
   const { userId } = getUserInfo() as IUserInfoType;
   const { data } = useGetSingleUserQuery(userId);
-  console.log(data);
+  //console.log(data);
   const [selectedCategory, setSelectedCategoryId] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [selectedAvailability, setSelectedAvailability] = useState<

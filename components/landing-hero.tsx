@@ -11,7 +11,7 @@ export const LandingHero = () => {
 
   const isSignedIn = user.role;
   return (
-    <section className="relative bg-[url('/assets/bg-auto-service.jpg')] bg-cover bg-center bg-no-repeat  flex justify-center">
+    <section className="relative bg-[url('../assets/bg_auto_service.jpg')] bg-cover bg-center bg-no-repeat  flex justify-center">
       <div className="absolute inset-0 bg-black opacity-20"></div>
       <div className="absolute inset-0 bg-black opacity-20 sm:bg-transparent sm:from-black/95 sm:to-black/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
       <div className=" font-bold py-36 text-center">

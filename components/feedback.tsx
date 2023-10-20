@@ -38,7 +38,7 @@ const CreateFeedback = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
     data["userId"] = userId;
-    console.log(data);
+    //console.log(data);
     try {
       const res = await addFeedback({ ...data }).unwrap();
       if (res?.id) {

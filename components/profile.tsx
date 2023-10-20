@@ -6,6 +6,7 @@ import { IUserInfoType } from "@/types";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Preview } from "./preview";
 
 const Profile = () => {
   const { userId } = getUserInfo() as IUserInfoType;
@@ -40,20 +41,20 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="text-center mt-12">
+      <div className="text-center my-12">
         <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
           {name}
         </h3>
-        <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+        <div className="flex gap-4 text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
           <MapPin className="mr-2 text-lg text-gray-400" />
           {profile?.address || "Update Your Address"}
         </div>
-        <div className="mb-2 text-blueGray-600 mt-10">
+        <div className="flex gap-4 mb-2 text-blueGray-600">
           <Mail className="mr-2 text-lg text-gray-400" />
           <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
           {email}
         </div>
-        <div className="mb-2 text-blueGray-600">
+        <div className="flex gap-4 mb-2 text-blueGray-600">
           <Phone />
           {profile?.phoneNo || "Update Your Address"}
         </div>
@@ -61,9 +62,7 @@ const Profile = () => {
       <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
         <div className="flex flex-wrap justify-center">
           <div className="w-full lg:w-9/12 px-4">
-            <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-              {profile?.bio || "Update Your Boi"}
-            </p>
+            <Preview value={profile?.bio || "Update Your Boi"} />
           </div>
         </div>
       </div>

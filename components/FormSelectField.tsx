@@ -43,11 +43,11 @@ const FormSelectField = ({
         render={({ field: { value, onChange } }) => (
           <Select onValueChange={handleChange ? handleChange : onChange}>
             <FormControl>
-              <SelectTrigger name={"categoryId"}>
+              <SelectTrigger name={name}>
                 <SelectValue placeholder={placeholder ? placeholder : name} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent>
+            <SelectContent className="">
               {options?.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

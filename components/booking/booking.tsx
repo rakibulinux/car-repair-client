@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import BookingContent from "./booking-content";
 import BookingModal from "./modal";
-import ModalContent from "./modal-content";
 
 type IBookingProps = {
   id: string;
@@ -28,7 +28,7 @@ const Booking = ({ id }: IBookingProps) => {
           className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
           data-hs-overlay="#hs-bg-gray-on-hover-cards"
         >
-          Open modal
+          Book Now
         </Button>
       </div>
 
@@ -37,7 +37,7 @@ const Booking = ({ id }: IBookingProps) => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       >
-        <ModalContent serviceId={id} />
+        <BookingContent serviceId={id} />
       </BookingModal>
     </div>
   );

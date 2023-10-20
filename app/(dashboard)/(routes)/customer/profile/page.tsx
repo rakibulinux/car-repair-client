@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 
 const ProfilePage = () => {
   const { role } = getUserInfo() as IUserInfoType;
-  console.log(role);
+  //console.log(role);
   if (role !== "customer") {
     redirect("/");
   }

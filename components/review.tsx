@@ -40,7 +40,7 @@ const Review = ({ serviceId }: ReviewProps) => {
     data["userId"] = userId;
     data["serviceId"] = serviceId;
     data["rating"] = Number(data.rating);
-    console.log(data);
+    //console.log(data);
     try {
       const res = await addReview({ ...data }).unwrap();
       if (res?.id) {

@@ -7,10 +7,13 @@ import { DataTable } from "@/components/data-table";
 import { Heading } from "@/components/heading";
 import { useBookingsQuery } from "@/redux/api/bookingApi";
 import { useDebounce } from "@/redux/hooks";
+import { getUserInfo } from "@/services/auth.service";
+import { IUserInfoType } from "@/types";
 import { useState } from "react";
 import { columns } from "./columns";
 
 const BookingListPage = () => {
+  const { userId, role } = getUserInfo() as IUserInfoType;
   const [size, setSize] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("");
@@ -33,6 +36,9 @@ const BookingListPage = () => {
   }
 
   const { data, isLoading } = useBookingsQuery({ ...query });
+  const userBooking = data?.booking.filter(
+    (booking) => booking.userId === userId
+  );
   if (isLoading) {
     return <Loading />;
   }
@@ -45,7 +51,7 @@ const BookingListPage = () => {
         iconColor="text-orange-700"
         bgColor="bg-orange-700/10"
       />
-      <DataTable columns={columns} data={(data && data.booking) || []} />
+      <DataTable columns={columns} data={(userBooking && userBooking) || []} />
     </div>
   );
 };

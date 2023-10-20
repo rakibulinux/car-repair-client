@@ -18,7 +18,7 @@ const BookingModal: React.FC<ModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-70">
-      <div className="relative w-full max-w-md p-6 mx-auto my-10 bg-white rounded-lg shadow-lg">
+      <div className="relative w-full max-w-md p-6 mx-auto my-10 bg-white dark:bg-gray-700 dark:text-white rounded-lg shadow-lg">
         <div className="absolute top-0 right-0 p-4">
           <Button
             variant="outline"

@@ -18,7 +18,7 @@ const rolesRedirect: Record<string, unknown> = {
 };
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
-  console.log(token, "token middleware");
+  //console.log(token, "token middleware");
   const { pathname } = request.nextUrl;
   if (!token) {
     if (hybridRoutes.includes(pathname)) {
@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
     }
     return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/sign-in`);
   }
-  console.log("token", token);
+  //console.log("token", token);
   const role = token?.role as string;
   // console.log(role, "role middleware")
   if (
@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
     (role === "super_admin" && pathname.startsWith("/super_admin")) ||
     (role === "customer" && customerAccesibleRoutes.includes(pathname))
   ) {
-    console.log("next");
+    //console.log("next");
     return NextResponse.next();
   }
 

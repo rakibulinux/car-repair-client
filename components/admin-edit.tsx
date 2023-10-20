@@ -17,7 +17,7 @@ type FormValues = {
 
 const AdminUpdate = ({ params }: any) => {
   const { data, isLoading: userIsLoading } = useGetSingleUserQuery(params?.id);
-  console.log(data);
+  //console.log(data);
   const [updateUser] = useUpdateUserMutation();
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const AdminUpdate = ({ params }: any) => {
   const onSubmit: SubmitHandler<FormValues> = async (values: any) => {
     try {
       const res = await updateUser({ id: params?.id, body: values }).unwrap();
-      console.log(res);
+      //console.log(res);
       if (res?.id) {
         router.push("/super_admin/admin");
         toast.success("Admin Update Successfully");

@@ -35,7 +35,7 @@ const SignUp = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res = await userRegister({ ...data }).unwrap();
-      console.log(res);
+      //console.log(res);
       if (res?.id) {
         router.push("/");
         // toast.success("User Created Successfully");

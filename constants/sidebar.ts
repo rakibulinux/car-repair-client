@@ -1,16 +1,13 @@
 import {
   BookmarkPlus,
   Code,
-  ImageIcon,
   Layers2,
   LayoutDashboard,
-  Music,
   Repeat,
   Settings,
   ShieldPlus,
   User2,
   UserPlus,
-  VideoIcon,
 } from "lucide-react";
 
 export const superAdminRoutes = [
@@ -102,28 +99,10 @@ export const customerRoutes = [
     href: "/customer/profile",
   },
   {
-    label: "Image Generation",
-    icon: ImageIcon,
+    label: "Booking History",
+    icon: BookmarkPlus,
     color: "text-pink-700",
     href: "/customer/booking-history",
-  },
-  {
-    label: "Video Generation",
-    icon: VideoIcon,
-    color: "text-orange-700",
-    href: "/customer/video",
-  },
-  {
-    label: "Music Generation",
-    icon: Music,
-    color: "text-emerald-500",
-    href: "/customer/music",
-  },
-  {
-    label: "Code Generation",
-    icon: Code,
-    color: "text-green-700",
-    href: "/customer/code",
   },
   {
     label: "Settings",

@@ -8,9 +8,10 @@ import "react-quill/dist/quill.snow.css";
 interface EditorProps {
   onChange: (value: string) => void;
   value: string;
+  defaultValue?: string;
 }
 
-export const Editor = ({ onChange, value }: EditorProps) => {
+export const Editor = ({ onChange, value, defaultValue }: EditorProps) => {
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
@@ -53,6 +54,7 @@ export const Editor = ({ onChange, value }: EditorProps) => {
         modules={modules}
         formats={formats}
         className="h-72"
+        defaultValue={defaultValue}
       />
     </div>
   );

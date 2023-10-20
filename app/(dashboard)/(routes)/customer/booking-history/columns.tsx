@@ -14,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UseDeleteServiceMutation } from "@/redux/api/serviceApi";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -83,7 +82,6 @@ export const columns: ColumnDef<any>[] = [
     id: "actions",
     cell: ({ row }) => {
       const service = row.original;
-      const [deleteService] = UseDeleteServiceMutation();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -99,7 +97,7 @@ export const columns: ColumnDef<any>[] = [
             >
               Copy Booking ID
             </DropdownMenuItem>
-            <Link href={`/admin/bookings/edit/${service.id}`}>
+            <Link href={`/customer/booking-history/edit/${service.id}`}>
               <DropdownMenuItem>Update</DropdownMenuItem>
             </Link>
             {/* <DropdownMenuItem> */}

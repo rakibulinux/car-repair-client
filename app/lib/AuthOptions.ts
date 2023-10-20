@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
             }
           );
           const { data } = await res.json();
-          console.log(data);
+          //console.log(data);
           const verifiedToken: any = jwtHelpers.verifyToken(
             data?.accessToken,
             process.env.JWT_SECRET!
@@ -65,7 +65,7 @@ export const authOptions: AuthOptions = {
         process.env.JWT_SECRET!
       );
       if (!verifiedToken) {
-        console.log("token expired so new token generated");
+        //console.log("token expired so new token generated");
         const { data } = await getNewAccessToken(token?.accessToken);
         token.accessToken = data?.accessToken;
       }

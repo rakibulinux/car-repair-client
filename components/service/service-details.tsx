@@ -16,7 +16,7 @@ const ServiceDetails = ({ params }: any) => {
   const serviceReviews = reviews?.reviews.filter(
     (review) => review.serviceId === params?.id
   );
-  console.log(serviceReviews);
+  //console.log(serviceReviews);
   return (
     <div className="w-11/12 mx-auto text-start">
       <h1 className="text-2xl">{service?.name}</h1>
