@@ -59,6 +59,7 @@ const BookingUpdate = ({ params }: any) => {
               >
                 {role === "admin" ? (
                   <>
+                    <option value="">Select</option>
                     <option value="FIXING">FIXING</option>
                     <option value="FIXED">FIXED</option>
                   </>
